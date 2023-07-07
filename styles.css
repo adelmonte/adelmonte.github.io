@@ -1,11 +1,18 @@
-/* html, body {
+ html, body {
   height: 100%;
   width: 100%;
-} */
+}
+
+canvas {
+
+  width: 100vw;
+  height: 100vh;
+}
+
 
 body {
    text-align: center;
-  background: black url("img/emoji.png");
+  background: black;
 }
 
 h1, p {
@@ -36,3 +43,4 @@ h2 {
   width: 800px;
   margin: auto;
 }
+
