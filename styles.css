@@ -18,6 +18,11 @@ h1 {
     color: #008080;
 }
 
+h2 {
+    font-size: 2rem;
+    color: #008080;
+}
+
 .bigger-text {
   font-size: 1.5rem;
 }
