@@ -2,7 +2,7 @@
 
 /* Global Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Trebuchet MS", Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #000;
@@ -11,8 +11,8 @@ body {
 
 /* Header Styles */
 header {
-  background-color: #00ffcc;
-  color: #000;
+  background-color: #000;
+  color: #fff;
   padding: 20px;
 }
 
@@ -28,7 +28,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-size: 18px;
 }
@@ -44,42 +44,76 @@ section {
 
 h1, h2 {
   color: #fff;
-  font-family: "Comic Sans MS", cursive;
+  font-family: "Trebuchet MS", Arial, sans-serif;
   text-transform: uppercase;
 }
 
 /* Home Section Styles */
 #home {
-  background-color: #ff0088;
+  background-color: #000;
   text-align: center;
   padding: 80px 0;
 }
 
 /* About Section Styles */
 #about {
-  background-color: #00ffcc;
+  background-color: #000;
   padding: 60px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Portfolio Section Styles */
 #portfolio {
-  background-color: #ff0088;
+  background-color: #000;
   padding: 60px;
 }
 
 /* Contact Section Styles */
 #contact {
-  background-color: #00ffcc;
+  background-color: #000;
   padding: 60px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer Styles */
 footer {
-  background-color: #00ffcc;
-  color: #000;
+  background-color: #000;
+  color: #fff;
   padding: 20px;
   text-align: center;
   font-size: 14px;
+}
+
+/* MySpace-like Styles */
+body {
+  background-image: url('https://i.imgur.com/Pq5iRnH.jpg');
+  background-repeat: repeat;
+}
+
+header {
+  background-color: #3b5998;
+}
+
+nav ul li a {
+  color: #fff !important;
+  font-size: 16px !important;
+  text-decoration: underline !important;
+}
+
+#home {
+  background-color: #fff;
+  padding: 80px 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#about, #portfolio, #contact {
+  background-color: #fff;
+  padding: 60px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #3b5998;
+}
+
+footer {
+  background-color: #3b5998;
+  color: #fff;
 }
