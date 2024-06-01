@@ -1,36 +1,48 @@
- html, body {
-  height: 100%;
-  width: 100%;
-}
-
-canvas {
-
-  width: auto;
-  height: auto;
-}
-
-
+/* General Styles */
 body {
-   text-align: center;
-  background: black;
+  background-color: #c0c0c0;
+  color: #000080;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-image: url("background.png");
+  background-repeat: repeat;
 }
 
-h1, p {
-    color: blueviolet;
-}
-
+/* Header Styles */
 h1 {
-    font-size: 4rem;
-    padding-top: 10rem;
-    color: #008080;
+  font-size: 36px;
+  text-decoration: underline;
+  color: #800000;
+}
+
+/* Section Styles */
+section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px auto; 
+  max-width: 600px; 
+  border: 2px solid #000080;
 }
 
 h2 {
-    font-size: 2rem;
-    color: #008080;
+  font-size: 24px;
+  text-decoration: underline;
+  color: #800000;
 }
 
-.bigger-text {
-  font-size: 1.5rem;
+/* Footer Styles */
+footer {
+  background-color: #000080;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
 }
 
+marquee {
+  width: 100%;
+  height: 30px;
+  background-color: #c0c0c0;
+  color: #000080;
+  font-weight: bold;
+}
