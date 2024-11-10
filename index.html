@@ -1,28 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="robots" content="noindex">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>delmonte.io</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>delmonte.io</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <style>
+        :root {
+            --primary: #2a4365;
+            --secondary: #4a5568;
+            --accent: #ed8936;
+            --bg: #f7fafc;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--secondary);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(
+                180deg,
+                rgba(0, 32, 84, 0.2) 0%,
+                rgba(0, 32, 84, 0.05) 40%,
+                rgba(0, 32, 84, 0.02) 60%,
+                rgba(0, 32, 84, 0) 100%
+            );
+        }
+
+        .mountains {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            animation: scrollMountains 40s linear infinite;
+        }
+
+        .mountains-far {
+            opacity: 0.15;
+            animation: scrollMountainsFar 50s linear infinite;
+        }
+
+        .mountain-path {
+            fill: rgba(0, 32, 84, 0.2);
+            transition: fill 0.3s ease;
+        }
+
+        @keyframes scrollMountains {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollMountainsFar {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        section {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: var(--primary);
+            margin: 0 0 1rem 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after, h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover h1::after,
+        section:hover h2::after {
+            transform: scaleX(1);
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ticker {
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 0.5rem 0;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .projects-section {
+            max-width: 1200px !important;
+            margin: 2rem auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding: 0 1rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-content {
+            flex-grow: 1;
+        }
+
+        .project-title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            word-break: break-word;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+            padding-top: 0.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <section id="home">
-      <h1>Del Monte</h1>
-      <p>This is my personal website, but unfortunately you won't find anything important here.</p>  
-    </section>
-    <section id="contact">
-      <h2>Contact Me!</h2>
-      <p>If you found this website, you probably have my resume. You'll find my email there. </p>
-    </section>
-  </main>
+    <div class="background-animation">
+        <!-- Far Mountains (larger, slower moving) -->
+        <svg class="mountains mountains-far" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+            <path class="mountain-path" 
+                  d="M-100 600 L200 250 L400 450 L600 200 L800 400 L1000 150 L1200 350 L1400 600 Z"/>
+            <path class="mountain-path" 
+                  d="M-200 600 L0 300 L200 450 L400 250 L600 500 L800 250 L1000 450 L1200 300 L1400 600 Z"/>
+        </svg>
 
-  <footer>
-    <br/>
-    <marquee behavior="alternate"> <p>2024 delmonte.io</p></marquee>
-  </footer>
-  
+        <!-- Near Mountains (smaller, faster moving) -->
+        <svg class="mountains" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+            <path class="mountain-path" 
+                  d="M-100 600 L100 350 L300 500 L500 300 L700 450 L900 250 L1100 400 L1300 600 Z"/>
+            <path class="mountain-path" 
+                  d="M0 600 L200 400 L400 550 L600 350 L800 500 L1000 300 L1200 450 L1400 600 Z"/>
+            <path class="mountain-path" 
+                  d="M-200 600 L0 450 L200 350 L400 500 L600 400 L800 550 L1000 350 L1200 400 L1400 600 Z"/>
+        </svg>
+    </div>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const App = () => {
+            const [repos, setRepos] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                fetch('https://api.github.com/users/adelmonte/repos?sort=updated')
+                    .then(response => response.json())
+                    .then(data => {
+                        const pinnedRepos = data.slice(0, 6);
+                        setRepos(pinnedRepos);
+                        setLoading(false);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching repos:', error);
+                        setLoading(false);
+                    });
+            }, []);
+
+            return (
+                <>
+                    <main>
+                        <section id="home">
+                            <h1>delmonte.io</h1>
+                            <p>Welcome to my portfolio website.</p>
+                        </section>
+
+                        <section id="projects" className="projects-section">
+                            <h2>Projects</h2>
+                            <div className="projects-grid">
+                                {loading ? (
+                                    <p>Loading projects...</p>
+                                ) : (
+                                    repos.map(repo => (
+                                        <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                                            <div className="project-card">
+                                                <div className="project-content">
+                                                    <div className="project-title">{repo.name}</div>
+                                                    <div className="project-description">
+                                                        {repo.description || 'No description available'}
+                                                    </div>
+                                                </div>
+                                                <div className="project-stats">
+                                                    <span>⭐ {repo.stargazers_count}</span>
+                                                    <span>🔄 {repo.forks_count}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    ))
+                                )}
+                            </div>
+                        </section>
+
+                        <section id="contact">
+                            <h2>Contact</h2>
+                            <p>a@delmonte.io 📧</p>
+                            <p>https://github.com/adelmonte  📄</p>
+                        </section>
+                    </main>
+
+                    <footer>
+                        <div className="ticker">
+                            <div className="ticker-content">2024 delmonte.io </div>
+                        </div>
+                    </footer>
+                </>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
 </body>
 </html>
