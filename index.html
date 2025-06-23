@@ -229,17 +229,68 @@
            const [loading, setLoading] = React.useState(true);
 
            React.useEffect(() => {
-               fetch('https://api.github.com/users/adelmonte/repos?sort=updated')
-                   .then(response => response.json())
-                   .then(data => {
-                       const pinnedRepos = data.slice(0, 6);
+               const query = `
+                   query {
+                       user(login: "adelmonte") {
+                           pinnedItems(first: 6, types: REPOSITORY) {
+                               nodes {
+                                   ... on Repository {
+                                       id
+                                       name
+                                       description
+                                       url
+                                       stargazerCount
+                                       forkCount
+                                   }
+                               }
+                           }
+                       }
+                   }
+               `;
+
+               fetch('https://api.github.com/graphql', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({ query })
+               })
+               .then(response => response.json())
+               .then(data => {
+                   if (data.data && data.data.user && data.data.user.pinnedItems) {
+                       const pinnedRepos = data.data.user.pinnedItems.nodes.map(repo => ({
+                           id: repo.id,
+                           name: repo.name,
+                           description: repo.description,
+                           html_url: repo.url,
+                           stargazers_count: repo.stargazerCount,
+                           forks_count: repo.forkCount
+                       }));
                        setRepos(pinnedRepos);
-                       setLoading(false);
-                   })
-                   .catch(error => {
-                       console.error('Error fetching repos:', error);
-                       setLoading(false);
-                   });
+                   } else {
+                       return fetch('https://api.github.com/users/adelmonte/repos?sort=updated')
+                           .then(response => response.json())
+                           .then(data => {
+                               const recentRepos = data.slice(0, 6);
+                               setRepos(recentRepos);
+                           });
+                   }
+                   setLoading(false);
+               })
+               .catch(error => {
+                   console.error('Error fetching pinned repos, falling back to recent:', error);
+                   fetch('https://api.github.com/users/adelmonte/repos?sort=updated')
+                       .then(response => response.json())
+                       .then(data => {
+                           const recentRepos = data.slice(0, 6);
+                           setRepos(recentRepos);
+                           setLoading(false);
+                       })
+                       .catch(fallbackError => {
+                           console.error('Error fetching repos:', fallbackError);
+                           setLoading(false);
+                       });
+               });
            }, []);
 
            return (
@@ -247,7 +298,7 @@
                    <main>
                        <section id="home">
                            <h1>delmonte.io</h1>
-                           <p>Welcome. Here you'll find my most recent github commits.</p>
+                           <p>Welcome. Here you'll find my pinned github repositories.</p>
                        </section>
 
                        <section id="projects" className="projects-section">
