@@ -1,316 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="robots" content="noindex">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light only">
-    <title>delmonte.io</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <style>
-        :root {
-            --primary: #2a4365;
-            --secondary: #4a5568;
-            --accent: #ed8936;
-            --bg: #f7fafc;
-            color-scheme: light;
-        }
+   <meta name="robots" content="noindex">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="color-scheme" content="light only">
+   <title>delmonte.io</title>
+   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+   <style>
+       :root {
+           --primary: #2a4365;
+           --secondary: #4a5568;
+           --accent: #ed8936;
+           --bg: #f7fafc;
+           --sun: #ffd700;
+           color-scheme: light;
+       }
 
-        html {
-            color-scheme: light;
-        }
+       html {
+           color-scheme: light;
+       }
 
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--bg);
-            color: var(--secondary);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow-x: hidden;
-        }
+       body {
+           margin: 0;
+           padding: 0;
+           min-height: 100vh;
+           font-family: 'JetBrains Mono', monospace;
+           background: var(--bg);
+           color: var(--secondary);
+           display: flex;
+           flex-direction: column;
+           position: relative;
+           overflow-x: hidden;
+       }
 
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: linear-gradient(
-                190deg,
-                rgba(0, 32, 84, 0.2) 0%,
-                rgba(0, 32, 84, 0.05) 40%,
-                rgba(0, 32, 84, 0.02) 60%,
-                rgba(0, 32, 84, 0) 100%
-            );
-        }
+       .background-animation {
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           z-index: -1;
+           overflow: hidden;
+           background: linear-gradient(
+               190deg,
+               rgba(255, 215, 0, 0.1) 0%,
+               rgba(0, 32, 84, 0.2) 20%,
+               rgba(0, 32, 84, 0.05) 40%,
+               rgba(0, 32, 84, 0.02) 60%,
+               rgba(0, 32, 84, 0) 100%
+           );
+       }
 
-        .mountains {
-            position: absolute;
-            width: 200%;
-            height: 100%;
-        }
+       .sun {
+           position: absolute;
+           top: 80px;
+           right: 120px;
+           width: 60px;
+           height: 60px;
+           background: var(--sun);
+           border-radius: 50%;
+           animation: sunGlow 3s ease-in-out infinite alternate;
+           box-shadow: 0 0 20px var(--sun);
+       }
 
-        .mountains-far {
-            opacity: 0.9;
-            animation: scrollMountainsFar 200s linear infinite;
-        }
+       @keyframes sunGlow {
+           0% { box-shadow: 0 0 20px var(--sun); }
+           100% { box-shadow: 0 0 40px var(--sun), 0 0 60px rgba(255, 215, 0, 0.3); }
+       }
 
-        .mountains-near {
-            animation: scrollMountains 300s linear infinite;
-        }
+       .mountains {
+           position: absolute;
+           width: 200%;
+           height: 100%;
+       }
 
-        .mountain-path {
-            fill: rgba(0, 32, 84, 0.2);
-        }
+       .mountains-far {
+           opacity: 0.9;
+           animation: scrollMountainsFar 200s linear infinite;
+       }
 
-        @keyframes scrollMountains {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
+       .mountains-near {
+           animation: scrollMountains 300s linear infinite;
+       }
 
-        @keyframes scrollMountainsFar {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
+       .mountain-path {
+           fill: rgba(0, 32, 84, 0.2);
+       }
 
-        main {
-            flex: 1;
-            padding: 2rem;
-            position: relative;
-        }
+       @keyframes scrollMountains {
+           from { transform: translateX(0); }
+           to { transform: translateX(-50%); }
+       }
 
-        section {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
+       @keyframes scrollMountainsFar {
+           from { transform: translateX(0); }
+           to { transform: translateX(-50%); }
+       }
 
-        section:hover {
-            transform: translateY(-3px);
-        }
+       main {
+           flex: 1;
+           padding: 2rem;
+           position: relative;
+       }
 
-        h1, h2 {
-            color: var(--primary);
-            margin: 0 0 1rem 0;
-            position: relative;
-            display: inline-block;
-        }
+       section {
+           max-width: 600px;
+           margin: 2rem auto;
+           padding: 2rem;
+           background: rgba(255, 255, 255, 0.9);
+           border-radius: 1rem;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+           transition: transform 0.2s ease;
+       }
 
-        h1::after, h2::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background: var(--accent);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
+       section:hover {
+           transform: translateY(-3px);
+       }
 
-        section:hover h1::after,
-        section:hover h2::after {
-            transform: scaleX(1);
-        }
+       h1, h2 {
+           color: var(--primary);
+           margin: 0 0 1rem 0;
+           position: relative;
+           display: inline-block;
+       }
 
-        p {
-            line-height: 1.6;
-            margin: 1rem 0;
-        }
+       h1::after, h2::after {
+           content: '';
+           position: absolute;
+           width: 100%;
+           height: 3px;
+           bottom: -5px;
+           left: 0;
+           background: var(--accent);
+           transform: scaleX(0);
+           transition: transform 0.3s ease;
+       }
 
-        footer {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
+       section:hover h1::after,
+       section:hover h2::after {
+           transform: scaleX(1);
+       }
 
-        .projects-section {
-            max-width: 1200px !important;
-            margin: 2rem auto;
-        }
+       p {
+           line-height: 1.6;
+           margin: 1rem 0;
+       }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            padding: 0 1rem;
-        }
+       .terminal-line {
+           background: rgba(42, 67, 101, 0.1);
+           padding: 12px 16px;
+           border-radius: 6px;
+           font-family: 'JetBrains Mono', monospace;
+           font-size: 0.9rem;
+           margin: 1rem 0;
+           border-left: 3px solid var(--accent);
+           line-height: 1.6;
+       }
 
-        .project-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+       .terminal-prompt {
+           color: var(--accent);
+           font-weight: 600;
+       }
 
-        .project-card:hover {
-            transform: translateY(-2px);
-        }
+       .terminal-content {
+           color: var(--secondary);
+           margin-top: 0.5rem;
+       }
 
-        .project-content {
-            flex-grow: 1;
-        }
+       .time-display {
+           color: var(--secondary);
+           margin-top: 0.5rem;
+           font-size: 0.85rem;
+       }
 
-        .project-title {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            word-break: break-word;
-        }
+       footer {
+           background: var(--primary);
+           color: white;
+           padding: 1rem;
+           text-align: center;
+           position: relative;
+           z-index: 1;
+       }
 
-        .project-description {
-            font-size: 0.95rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
+       .projects-section {
+           max-width: 1200px !important;
+           margin: 2rem auto;
+       }
 
-        .project-stats {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.9rem;
-            color: var(--accent);
-            padding-top: 0.5rem;
-        }
+       .projects-grid {
+           display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+           gap: 1.5rem;
+           margin-top: 1.5rem;
+           padding: 0 1rem;
+       }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+       .project-card {
+           background: rgba(255, 255, 255, 0.9);
+           padding: 1.5rem;
+           border-radius: 1rem;
+           border: none;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+           transition: transform 0.2s ease;
+           min-height: 150px;
+           display: flex;
+           flex-direction: column;
+           justify-content: space-between;
+       }
 
-        @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+       .project-card:hover {
+           transform: translateY(-2px);
+       }
+
+       .project-content {
+           flex-grow: 1;
+       }
+
+       .project-title {
+           color: var(--primary);
+           font-weight: 600;
+           font-size: 1.1rem;
+           margin-bottom: 0.75rem;
+           word-break: break-word;
+           display: flex;
+           align-items: center;
+           gap: 12px;
+           flex-wrap: wrap;
+       }
+
+       .project-description {
+           font-size: 0.95rem;
+           color: var(--secondary);
+           margin-bottom: 1rem;
+           line-height: 1.5;
+       }
+
+       .project-stats {
+           display: flex;
+           gap: 1rem;
+           font-size: 0.9rem;
+           color: var(--accent);
+           padding-top: 0.5rem;
+           flex-wrap: wrap;
+       }
+
+       .language-badge {
+           background: var(--secondary);
+           color: white;
+           padding: 3px 10px;
+           border-radius: 14px;
+           font-size: 0.75rem;
+           font-weight: 500;
+           opacity: 0.8;
+       }
+
+       .commit-activity {
+           width: 8px;
+           height: 8px;
+           border-radius: 50%;
+           display: inline-block;
+           margin-left: 8px;
+       }
+
+       .commit-recent { background: var(--accent); }
+       .commit-moderate { background: var(--secondary); opacity: 0.7; }
+       .commit-old { background: var(--secondary); opacity: 0.4; }
+
+       a {
+           text-decoration: none;
+           color: inherit;
+       }
+
+       @media (max-width: 768px) {
+           .projects-grid {
+               grid-template-columns: 1fr;
+           }
+           
+           .sun {
+               top: 60px;
+               right: 60px;
+               width: 40px;
+               height: 40px;
+           }
+       }
+   </style>
 </head>
 <body>
-    <div class="background-animation">
-        <svg class="mountains mountains-far" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-            <path class="mountain-path" 
-                  d="M-100 600 L200 250 L400 450 L600 200 L800 400 L1000 150 L1200 350 L1400 600 Z"/>
-        </svg>
-        <svg class="mountains mountains-near" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-            <path class="mountain-path" 
-                  d="M-200 600 L0 450 L200 350 L400 500 L600 400 L800 550 L1000 350 L1200 400 L1400 600 Z"/>
-        </svg>
-    </div>
+   <div class="background-animation">
+       <div class="sun"></div>
+       <svg class="mountains mountains-far" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+           <path class="mountain-path" 
+                 d="M-100 600 L200 250 L400 450 L600 200 L800 400 L1000 150 L1200 350 L1400 600 Z"/>
+       </svg>
+       <svg class="mountains mountains-near" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+           <path class="mountain-path" 
+                 d="M-200 600 L0 450 L200 350 L400 500 L600 400 L800 550 L1000 350 L1200 400 L1400 600 Z"/>
+       </svg>
+   </div>
 
-    <div id="root"></div>
+   <div id="root"></div>
 
-    <script type="text/babel">
-        const App = () => {
-            const [repos, setRepos] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
+   <script type="text/babel">
+       const App = () => {
+           const [repos, setRepos] = React.useState([]);
+           const [loading, setLoading] = React.useState(true);
+           const [currentTime, setCurrentTime] = React.useState(new Date());
 
-            React.useEffect(() => {
-                fetch('https://pinned.berrysauce.dev/get/adelmonte')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Convert the API response format to match what we expect
-                        const formattedRepos = data.map(repo => ({
-                            id: `${repo.author}/${repo.name}`,
-                            name: repo.name,
-                            description: repo.description,
-                            html_url: `https://github.com/${repo.author}/${repo.name}`,
-                            stargazers_count: repo.stars,
-                            forks_count: repo.forks
-                        }));
-                        setRepos(formattedRepos);
-                        setLoading(false);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching pinned repos:', error);
-                        // Fallback to regular repos
-                        fetch('https://api.github.com/users/adelmonte/repos?sort=updated&per_page=6')
-                            .then(response => response.json())
-                            .then(data => {
-                                setRepos(data);
-                                setLoading(false);
-                            })
-                            .catch(fallbackError => {
-                                console.error('Error fetching fallback repos:', fallbackError);
-                                setLoading(false);
-                            });
-                    });
-            }, []);
+           React.useEffect(() => {
+               const timer = setInterval(() => {
+                   setCurrentTime(new Date());
+               }, 1000);
 
-            return (
-                <>
-                    <main>
-                        <section id="home">
-                            <h1>delmonte.io</h1>
-                            <p>Welcome. Here you'll find my pinned github repositories.</p>
-                        </section>
+               return () => clearInterval(timer);
+           }, []);
 
-                        <section id="projects" className="projects-section">
-                            <h2>Projects</h2>
-                            <div className="projects-grid">
-                                {loading ? (
-                                    <p>Loading projects...</p>
-                                ) : repos.length === 0 ? (
-                                    <p>No repositories found.</p>
-                                ) : (
-                                    repos.map(repo => (
-                                        <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                                            <div className="project-card">
-                                                <div className="project-content">
-                                                    <div className="project-title">{repo.name}</div>
-                                                    <div className="project-description">
-                                                        {repo.description || 'No description available'}
-                                                    </div>
-                                                </div>
-                                                <div className="project-stats">
-                                                    <span>⭐ {repo.stargazers_count}</span>
-                                                    <span>🔄 {repo.forks_count}</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    ))
-                                )}
-                            </div>
-                        </section>
+           const getLanguageColor = (language) => {
+               const colors = {
+                   'Shell': '#4a5568',
+                   'Bash': '#4a5568', 
+                   'C': '#2a4365',
+                   'Python': '#2a4365',
+                   'JavaScript': '#4a5568',
+                   'Go': '#2a4365',
+                   'Rust': '#4a5568',
+                   'Perl': '#2a4365',
+                   'Makefile': '#4a5568',
+                   'Dockerfile': '#2a4365'
+               };
+               return colors[language] || '#4a5568';
+           };
 
-                        <section id="contact">
-                            <h2>Contact</h2>
-                            <p>a@delmonte.io 📧</p>
-                            <p>https://github.com/adelmonte  📄</p>
-                        </section>
-                    </main>
+           const getCommitActivity = (updatedAt) => {
+               const now = new Date();
+               const updated = new Date(updatedAt);
+               const daysDiff = (now - updated) / (1000 * 60 * 60 * 24);
+               
+               if (daysDiff < 30) return 'commit-recent';
+               if (daysDiff < 90) return 'commit-moderate';
+               return 'commit-old';
+           };
 
-                    <footer>
-                        2025 delmonte.io
-                    </footer>
-                </>
-            );
-        };
+           React.useEffect(() => {
+               fetch('https://pinned.berrysauce.dev/get/adelmonte')
+                   .then(response => response.json())
+                   .then(data => {
+                       const formattedRepos = data.map(repo => ({
+                           id: `${repo.author}/${repo.name}`,
+                           name: repo.name,
+                           description: repo.description,
+                           html_url: `https://github.com/${repo.author}/${repo.name}`,
+                           stargazers_count: repo.stars,
+                           forks_count: repo.forks,
+                           language: repo.language,
+                           updated_at: repo.updated_at
+                       }));
+                       setRepos(formattedRepos);
+                       setLoading(false);
+                   })
+                   .catch(error => {
+                       console.error('Error fetching pinned repos:', error);
+                       fetch('https://api.github.com/users/adelmonte/repos?sort=updated&per_page=6')
+                           .then(response => response.json())
+                           .then(data => {
+                               setRepos(data);
+                               setLoading(false);
+                           })
+                           .catch(fallbackError => {
+                               console.error('Error fetching fallback repos:', fallbackError);
+                               setLoading(false);
+                           });
+                   });
+           }, []);
 
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+           const formatTime = (date) => {
+               return date.toLocaleString('en-US', {
+                   timeZone: 'America/New_York',
+                   weekday: 'short',
+                   month: 'short',
+                   day: 'numeric',
+                   hour: '2-digit',
+                   minute: '2-digit',
+                   second: '2-digit',
+                   timeZoneName: 'short'
+               });
+           };
+
+           return (
+               <>
+                   <main>
+                       <section id="home">
+                           <h1>delmonte.io</h1>
+                           <div className="terminal-line">
+                               <div><span className="terminal-prompt">user@nyc:~$</span> del_monte </div>
+                               <div className="terminal-content">
+                                   Linux Systems Engineer • NYC<br />
+                                   Shell scripts, system administration, and keeping servers running.
+                               </div>
+                               <div className="time-display">
+                                   {formatTime(currentTime)}
+                               </div>
+                           </div>
+                       </section>
+
+                       <section id="projects" className="projects-section">
+                           <h2>Projects</h2>
+                           <div className="projects-grid">
+                               {loading ? (
+                                   <p>Loading projects...</p>
+                               ) : repos.length === 0 ? (
+                                   <p>No repositories found.</p>
+                               ) : (
+                                   repos.map(repo => (
+                                       <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                                           <div className="project-card">
+                                               <div className="project-content">
+                                                   <div className="project-title">
+                                                       <span>{repo.name}</span>
+                                                       {repo.language && (
+                                                           <span 
+                                                               className="language-badge" 
+                                                               style={{backgroundColor: getLanguageColor(repo.language)}}
+                                                           >
+                                                               {repo.language}
+                                                           </span>
+                                                       )}
+                                                       {repo.updated_at && (
+                                                           <span className={`commit-activity ${getCommitActivity(repo.updated_at)}`}></span>
+                                                       )}
+                                                   </div>
+                                                   <div className="project-description">
+                                                       {repo.description || 'No description available'}
+                                                   </div>
+                                               </div>
+                                               <div className="project-stats">
+                                                   <span>⭐ {repo.stargazers_count}</span>
+                                                   <span>🔄 {repo.forks_count}</span>
+                                               </div>
+                                           </div>
+                                       </a>
+                                   ))
+                               )}
+                           </div>
+                       </section>
+
+                       <section id="contact">
+                           <h2>Contact</h2>
+                           <p>a@delmonte.io 📧</p>
+                           <p>https://github.com/adelmonte 📄</p>
+                       </section>
+                   </main>
+
+                   <footer>
+                       2025 delmonte.io
+                   </footer>
+               </>
+           );
+       };
+
+       ReactDOM.render(<App />, document.getElementById('root'));
+   </script>
 </body>
 </html>
