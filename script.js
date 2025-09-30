@@ -40,36 +40,27 @@ function showBodyContent() {
         }, 500);
     }, 300);
     
-    // Show contact section after repos
-    setTimeout(() => {
-        const contactSection = document.querySelector('.contact-section');
-        if (contactSection) {
-            contactSection.classList.add('show');
+// Show contact section after repos
+setTimeout(() => {
+    const contactSection = document.querySelector('.contact-section');
+    if (contactSection) {
+        contactSection.classList.add('show');
+        
+        const contactHeader = contactSection.querySelector('.section-header');
+        if (contactHeader) {
+            contactHeader.classList.add('show');
             
-            const contactHeader = contactSection.querySelector('.section-header');
-            if (contactHeader) {
-                contactHeader.classList.add('show');
-                
-                // Trigger typewriter for CONTACT header
+            // Trigger typewriter for CONTACT header after fade-in completes
+            setTimeout(() => {
                 const contactH2 = contactHeader.querySelector('h2');
                 if (contactH2) {
                     const originalText = contactH2.getAttribute('data-text') || 'CONTACT';
                     typeWriter(contactH2, originalText, 50);
                 }
-            }
-            
-            // Trigger typewriter for contact labels
-            setTimeout(() => {
-                const contactLabels = contactSection.querySelectorAll('.contact-label');
-                contactLabels.forEach((label, index) => {
-                    setTimeout(() => {
-                        const originalText = label.getAttribute('data-text') || label.textContent;
-                        typeWriter(label, originalText, 50);
-                    }, index * 200);
-                });
             }, 500);
         }
-    }, 1800);
+    }
+}, 1800);
     
     // Show footer last
     setTimeout(() => {
@@ -82,13 +73,6 @@ window.addEventListener('load', () => {
     const titleLines = document.querySelectorAll('.title-line');
     const designation = document.querySelector('.designation');
     const statusText = document.querySelector('.status-bar span:last-child');
-    
-    // Store original text for contact labels
-    const contactLabels = document.querySelectorAll('.contact-label');
-    contactLabels.forEach(label => {
-        label.setAttribute('data-text', label.textContent);
-        label.textContent = '';
-    });
     
     // Hide elements initially
     designation.style.opacity = '0';
