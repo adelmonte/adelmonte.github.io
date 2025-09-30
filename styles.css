@@ -711,3 +711,16 @@ body {
 .footer.show {
     opacity: 1;
 }
+
+
+.particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 1;
+    z-index: 0;
+    box-shadow: 0 0 6px var(--accent);
+}
