@@ -735,3 +735,27 @@ body {
     z-index: 0;
     box-shadow: 0 0 6px var(--accent);
 }
+
+/* GPU acceleration for animated elements */
+.particle,
+.repo-card,
+.contact-link,
+.info-cell {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize typewriter elements */
+.title-line,
+.section-header h2,
+.status-bar span {
+    will-change: opacity;
+    transform: translateZ(0);
+}
+
+/* Remove will-change after animations complete */
+.repo-card:not(:hover),
+.contact-link:not(:hover) {
+    will-change: auto;
+}
