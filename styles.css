@@ -22,12 +22,8 @@
     opacity: 0;
 }
 
-.contact-label {
-    visibility: hidden;
-}
-
 .section-header h2 {
-    visibility: hidden;
+    opacity: 0;
 }
 
 body {
