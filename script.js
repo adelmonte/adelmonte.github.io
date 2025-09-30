@@ -16,77 +16,147 @@ function typeWriter(element, text, speed, callback) {
     type();
 }
 
-// Initialize typewriter on load
+// Show body content in order
+function showBodyContent() {
+    // Show info grid first
+    document.querySelector('.info-grid').classList.add('show');
+    
+    // Show repositories section header after a delay
+    setTimeout(() => {
+        const reposHeader = document.querySelector('.projects-section .section-header');
+        if (reposHeader) {
+            reposHeader.classList.add('show');
+            // Trigger typewriter for REPOSITORIES header
+            const reposH2 = reposHeader.querySelector('h2');
+            if (reposH2) {
+                const originalText = reposH2.getAttribute('data-text') || 'REPOSITORIES';
+                typeWriter(reposH2, originalText, 50);
+            }
+        }
+        
+        // Show repos grid slightly after header
+        setTimeout(() => {
+            document.querySelector('.repos-grid').classList.add('show');
+        }, 500);
+    }, 300);
+    
+    // Show contact section after repos
+    setTimeout(() => {
+        const contactSection = document.querySelector('.contact-section');
+        if (contactSection) {
+            contactSection.classList.add('show');
+            
+            const contactHeader = contactSection.querySelector('.section-header');
+            if (contactHeader) {
+                contactHeader.classList.add('show');
+                
+                // Trigger typewriter for CONTACT header
+                const contactH2 = contactHeader.querySelector('h2');
+                if (contactH2) {
+                    const originalText = contactH2.getAttribute('data-text') || 'CONTACT';
+                    typeWriter(contactH2, originalText, 50);
+                }
+            }
+            
+            // Trigger typewriter for contact labels
+            setTimeout(() => {
+                const contactLabels = contactSection.querySelectorAll('.contact-label');
+                contactLabels.forEach((label, index) => {
+                    setTimeout(() => {
+                        const originalText = label.getAttribute('data-text') || label.textContent;
+                        typeWriter(label, originalText, 50);
+                    }, index * 200);
+                });
+            }, 500);
+        }
+    }, 1800);
+    
+    // Show footer last
+    setTimeout(() => {
+        document.querySelector('.footer').classList.add('show');
+    }, 2500);
+}
+
+// Initialize animations on load
 window.addEventListener('load', () => {
     const titleLines = document.querySelectorAll('.title-line');
     const designation = document.querySelector('.designation');
     const statusText = document.querySelector('.status-bar span:last-child');
-    const sectionHeaders = document.querySelectorAll('.section-header h2');
+    
+    // Store original text for contact labels
     const contactLabels = document.querySelectorAll('.contact-label');
-    const contactValues = document.querySelectorAll('.contact-value');
+    contactLabels.forEach(label => {
+        label.setAttribute('data-text', label.textContent);
+        label.textContent = '';
+    });
     
     // Hide elements initially
     designation.style.opacity = '0';
     statusText.style.opacity = '0';
-    sectionHeaders.forEach(h => h.style.opacity = '0');
-    contactLabels.forEach(label => label.style.opacity = '0');
-    contactValues.forEach(value => value.style.opacity = '0');
     
-    // Sequence the typewriter effects
-    typeWriter(designation, 'SE-001', 60, () => {
-        typeWriter(titleLines[0], 'DEL', 80, () => {
+    // Store original text for section headers
+    const reposH2 = document.querySelector('.projects-section .section-header h2');
+    const contactH2 = document.querySelector('.contact-section .section-header h2');
+    if (reposH2) {
+        reposH2.setAttribute('data-text', reposH2.textContent);
+        reposH2.textContent = '';
+    }
+    if (contactH2) {
+        contactH2.setAttribute('data-text', contactH2.textContent);
+        contactH2.textContent = '';
+    }
+    
+    // Fade in SE-001
+    setTimeout(() => {
+        designation.style.transition = 'opacity 0.8s ease-in';
+        designation.style.opacity = '1';
+    }, 300);
+    
+    // Start title typewriter after fade
+    setTimeout(() => {
+        typeWriter(titleLines[0], 'DEL', 50, () => {
             const cursor = titleLines[1].querySelector('.cursor');
             const cursorHTML = cursor ? cursor.outerHTML : '';
             
-            typeWriter(titleLines[1], 'MONTE', 80, () => {
+            typeWriter(titleLines[1], 'MONTE', 50, () => {
                 if (cursorHTML) {
                     titleLines[1].innerHTML += cursorHTML;
                 }
                 
-                // Type status
-                typeWriter(statusText, 'AVAILABLE', 50, () => {
-                    
-                    // Type section headers with delays
-                    setTimeout(() => {
-                        typeWriter(sectionHeaders[0], 'REPOSITORIES', 40, () => {
-                            setTimeout(() => {
-                                typeWriter(sectionHeaders[1], 'CONTACT', 40, () => {
-                                    
-                                    // Type contact labels and values
-                                    setTimeout(() => {
-                                        typeWriter(contactLabels[0], 'EMAIL', 30, () => {
-                                            typeWriter(contactValues[0], 'a@delmonte.io', 30);
-                                        });
-                                    }, 100);
-                                    
-                                    setTimeout(() => {
-                                        typeWriter(contactLabels[1], 'GITHUB', 30, () => {
-                                            typeWriter(contactValues[1], 'adelmonte', 30);
-                                        });
-                                    }, 300);
-                                });
-                            }, 200);
-                        });
-                    }, 300);
-                });
+                // Offset available status
+                setTimeout(() => {
+                    typeWriter(statusText, 'AVAILABLE', 50, () => {
+                        // Show body content after header animation completes
+                        setTimeout(showBodyContent, 300);
+                    });
+                }, 400);
             });
         });
-    });
+    }, 1100);
 });
 
-// Floating Particles (Rainbow)
+// Floating Particles (Programming Language Colors)
 function createParticle() {
     const particle = document.createElement('div');
     particle.className = 'particle';
     
     const colors = [
-        '#ff0000',
-        '#ff7f00',
-        '#ffff00',
-        '#00ff00',
-        '#0000ff',
-        '#4b0082',
-        '#9400d3'
+        '#4EAA25', // Shell/Bash
+        '#4B8BBE', // Python
+        '#E8D44D', // JavaScript (darkened)
+        '#3178C6', // TypeScript
+        '#F34B7D', // C++
+        '#00ADD8', // Go
+        '#F74C00', // Rust
+        '#39457E', // Perl
+        '#CC342D', // Ruby
+        '#777BB4', // PHP
+        '#F89820', // Java
+        '#FA7343', // Swift
+        '#B125EA', // Kotlin
+        '#2496ED', // Dockerfile
+        '#E34C26', // HTML
+        '#1572B6'  // CSS
     ];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     
@@ -112,7 +182,7 @@ function createParticle() {
     }).onfinish = () => particle.remove();
 }
 
-setInterval(createParticle, 50);
+setInterval(createParticle, 30);
 
 // Time update
 function updateTime() {
@@ -174,8 +244,8 @@ function renderRepos(repos) {
             </div>
             <div class="repo-description">${repo.description || 'No description available'}</div>
             <div class="repo-stats">
-                <span>★ ${repo.stargazers_count}</span>
-                <span>⑂ ${repo.forks_count}</span>
+                <span><span class="star-icon">★</span> ${repo.stargazers_count}</span>
+                <span><span class="fork-icon">⑂</span> ${repo.forks_count}</span>
             </div>
         </a>
     `).join('');
