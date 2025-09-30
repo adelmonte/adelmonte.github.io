@@ -264,6 +264,11 @@ body {
     overflow: hidden;
 }
 
+.repo-card {
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
 .repo-card::before {
     content: '';
     position: absolute;
