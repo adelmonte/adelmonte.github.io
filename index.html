@@ -1,65 +1,77 @@
-<div class="grid-overlay"></div>
-<div class="vertical-text">SYSTEMS ENGINEER</div>
-<nav class="top-nav">
-    <div class="nav-line"></div>
-    <div class="coordinates">40.7128°N 74.0060°W</div>
-</nav>
-<main class="container">
-    <header class="hero">
-        <div class="designation">SE-001</div>
-        <h1 class="main-title">
-            <span class="title-line">DEL</span>
-            <span class="title-line">MONTE<span class="cursor">_</span></span>
-        </h1>
-        <div class="status-bar">
-            <span class="status-indicator"></span>
-            <span>AVAILABLE</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEL MONTE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="vertical-text">SYSTEMS ENGINEER</div>
+    <nav class="top-nav">
+        <div class="nav-line"></div>
+        <div class="coordinates">40.7128°N 74.0060°W</div>
+    </nav>
+    <main class="container">
+        <header class="hero">
+            <div class="designation">SE-001</div>
+            <h1 class="main-title">
+                <span class="title-line">DEL</span>
+                <span class="title-line">MONTE<span class="cursor">_</span></span>
+            </h1>
+            <div class="status-bar">
+                <span class="status-indicator"></span>
+                <span>AVAILABLE</span>
+            </div>
+        </header>
+        <section class="info-grid">
+            <div class="info-cell">
+                <div class="cell-label">LOCATION</div>
+                <div class="cell-value">NEW YORK CITY</div>
+            </div>
+            <div class="info-cell">
+                <div class="cell-label">SPECIALIZATION</div>
+                <div class="cell-value">LINUX / DEVOPS / AUTOMATION</div>
+            </div>
+            <div class="info-cell">
+                <div class="cell-label">STATUS</div>
+                <div class="cell-value" id="current-time">--:--:--</div>
+            </div>
+        </section>
+        <section class="projects-section">
+            <div class="section-header">
+                <h2>REPOSITORIES</h2>
+                <div class="header-line"></div>
+            </div>
+            <div id="repos-container" class="repos-grid">
+                <div class="loading">LOADING...</div>
+            </div>
+        </section>
+        <section class="contact-section">
+            <div class="section-header">
+                <h2>CONTACT</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:a@delmonte.io" class="contact-link">
+                    <span class="contact-label">EMAIL</span>
+                    <span class="contact-value">a@delmonte.io</span>
+                </a>
+                <a href="https://github.com/adelmonte" target="_blank" class="contact-link">
+                    <span class="contact-label">GITHUB</span>
+                    <span class="contact-value">adelmonte</span>
+                </a>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-line"></div>
+        <div class="footer-content">
+            <span id="footer-year">© 2026 DELMONTE.IO</span>
+            <span class="footer-code">v1.0.1</span>
         </div>
-    </header>
-    <section class="info-grid">
-        <div class="info-cell">
-            <div class="cell-label">LOCATION</div>
-            <div class="cell-value">NEW YORK CITY</div>
-        </div>
-        <div class="info-cell">
-            <div class="cell-label">SPECIALIZATION</div>
-            <div class="cell-value">LINUX / DEVOPS / AUTOMATION</div>
-        </div>
-        <div class="info-cell">
-            <div class="cell-label">STATUS</div>
-            <div class="cell-value" id="current-time">--:--:--</div>
-        </div>
-    </section>
-    <section class="projects-section">
-        <div class="section-header">
-            <h2>REPOSITORIES</h2>
-            <div class="header-line"></div>
-        </div>
-        <div id="repos-container" class="repos-grid">
-            <div class="loading">LOADING...</div>
-        </div>
-    </section>
-    <section class="contact-section">
-        <div class="section-header">
-            <h2>CONTACT</h2>
-            <div class="header-line"></div>
-        </div>
-        <div class="contact-grid">
-            <a href="mailto:a@delmonte.io" class="contact-link">
-                <span class="contact-label">EMAIL</span>
-                <span class="contact-value">a@delmonte.io</span>
-            </a>
-            <a href="https://github.com/adelmonte" target="_blank" class="contact-link">
-                <span class="contact-label">GITHUB</span>
-                <span class="contact-value">adelmonte</span>
-            </a>
-        </div>
-    </section>
-</main>
-<footer class="footer">
-    <div class="footer-line"></div>
-    <div class="footer-content">
-        <span id="footer-year">© 2026 DELMONTE.IO</span>
-        <span class="footer-code">v1.0.1</span>
-    </div>
-</footer>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
