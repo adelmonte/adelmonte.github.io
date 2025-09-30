@@ -40,27 +40,28 @@ function showBodyContent() {
         }, 500);
     }, 300);
     
-// Show contact section after repos
-setTimeout(() => {
-    const contactSection = document.querySelector('.contact-section');
-    if (contactSection) {
-        contactSection.classList.add('show');
-        
-        const contactHeader = contactSection.querySelector('.section-header');
-        if (contactHeader) {
-            contactHeader.classList.add('show');
+    // Show contact section after repos
+    setTimeout(() => {
+        const contactSection = document.querySelector('.contact-section');
+        if (contactSection) {
+            contactSection.classList.add('show');
             
-            // Trigger typewriter for CONTACT header after fade-in completes
-            setTimeout(() => {
-                const contactH2 = contactHeader.querySelector('h2');
-                if (contactH2) {
-                    const originalText = contactH2.getAttribute('data-text') || 'CONTACT';
-                    typeWriter(contactH2, originalText, 50);
-                }
-            }, 300);
+            const contactHeader = contactSection.querySelector('.section-header');
+            if (contactHeader) {
+                contactHeader.classList.add('show');
+                
+                // Trigger typewriter for CONTACT header after fade-in completes
+                setTimeout(() => {
+                    const contactH2 = contactHeader.querySelector('h2');
+                    if (contactH2) {
+                        contactH2.style.visibility = 'visible';
+                        const originalText = contactH2.getAttribute('data-text') || 'CONTACT';
+                        typeWriter(contactH2, originalText, 50);
+                    }
+                }, 300);
+            }
         }
-    }
-}, 1800);
+    }, 1800);
     
     // Show footer last
     setTimeout(() => {
@@ -87,7 +88,7 @@ window.addEventListener('load', () => {
     }
     if (contactH2) {
         contactH2.setAttribute('data-text', contactH2.textContent);
-        contactH2.textContent = '';
+        contactH2.style.visibility = 'hidden';
     }
     
     // Fade in SE-001
