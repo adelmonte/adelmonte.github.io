@@ -112,9 +112,9 @@ body {
 
 .main-title {
     font-size: clamp(4rem, 12vw, 10rem);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 0.85;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.05em;
     margin-bottom: 40px;
 }
 
