@@ -166,7 +166,7 @@ function createParticle() {
     particle.style.top = Math.random() * window.innerHeight + 'px';
     document.body.appendChild(particle);
     
-    const duration = 3000 + Math.random() * 2000;
+    const duration = 10000 + Math.random() * 2000;
     const angle = Math.random() * Math.PI * 2;
     const distance = 50 + Math.random() * 100;
     
@@ -182,7 +182,7 @@ function createParticle() {
     }).onfinish = () => particle.remove();
 }
 
-setInterval(createParticle, 30);
+setInterval(createParticle, 40);
 
 // Time update
 function updateTime() {
