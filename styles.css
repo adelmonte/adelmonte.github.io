@@ -15,6 +15,21 @@
     --accent: #00ff00;
 }
 
+/* Prevent FOUC - hide elements before animation */
+.designation,
+.title-line,
+.status-bar span:last-child {
+    opacity: 0;
+}
+
+.contact-label {
+    visibility: hidden;
+}
+
+.section-header h2 {
+    visibility: hidden;
+}
+
 body {
     background: var(--bg);
     color: var(--fg);
