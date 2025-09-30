@@ -120,6 +120,7 @@ body {
 
 .title-line {
     display: block;
+    opacity: 0;
 }
 
 .cursor {
@@ -486,6 +487,19 @@ body {
     letter-spacing: 0.1em;
     color: var(--gray);
     font-weight: 400;
+}
+
+/* Floating Particles */
+.particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 0;
+    box-shadow: 0 0 4px var(--accent);
 }
 
 @media (max-width: 1024px) {
