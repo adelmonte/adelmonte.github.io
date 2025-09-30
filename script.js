@@ -58,7 +58,7 @@ function showBodyContent() {
                         const originalText = contactH2.getAttribute('data-text') || 'CONTACT';
                         typeWriter(contactH2, originalText, 50);
                     }
-                }, 300);
+                }, 400);
             }
         }
     }, 1800);
