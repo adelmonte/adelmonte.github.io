@@ -109,7 +109,7 @@ window.addEventListener('load', () => {
                 
                 // Offset available status
                 setTimeout(() => {
-                    typeWriter(statusText, 'AVAILABLE', 50, () => {
+                    typeWriter(statusText, 'AVAILABLE (for hire)', 50, () => {
                         // Show body content after header animation completes
                         setTimeout(showBodyContent, 300);
                     });
